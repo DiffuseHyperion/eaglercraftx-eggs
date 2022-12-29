@@ -1,0 +1,42 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2022-12-29T20:12:53+08:00",
+    "name": "EaglercraftX Waterfall",
+    "author": "support@pterodactyl.io",
+    "description": "modified from parkervcp's waterfall egg from https:\/\/github.com\/parkervcp\/eggs\/tree\/master\/game_eggs\/minecraft\/proxy\/java\/waterfall, original description below:\r\n\r\nPaper fork of the BungeeCord software, with improved Forge support and more features.",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/pterodactyl\/yolks:java_8": "ghcr.io\/pterodactyl\/yolks:java_8"
+    },
+    "file_denylist": [],
+    "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
+    "config": {
+        "files": "{\r\n    \"config.yml\": {\r\n        \"parser\": \"yaml\",\r\n        \"find\": {\r\n            \"listeners[0].host\": \"0.0.0.0:{{server.build.default.port}}\",\r\n            \"servers.*.address\": {\r\n                \"127.0.0.1\": \"{{config.docker.interface}}\",\r\n                \"localhost\": \"{{config.docker.interface}}\"\r\n            },\r\n            \"ip_forward\": true\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \"Listening on \"\r\n}",
+        "logs": "{}",
+        "stop": "end"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# Waterfall Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\napt update\r\napt install -y curl jq\r\n\r\nPROJECT=waterfall\r\nMINECRAFT_VERSION=`curl -s https:\/\/papermc.io\/api\/v2\/projects\/${PROJECT} | jq -r '.versions' | jq -r '.[-1]'`\r\nBUILD_NUMBER=`curl -s https:\/\/papermc.io\/api\/v2\/projects\/${PROJECT}\/versions\/${MINECRAFT_VERSION} | jq -r '.builds' | jq -r '.[-1]'`\r\n\t\r\nJAR_NAME=${PROJECT}-${MINECRAFT_VERSION}-${BUILD_NUMBER}.jar\r\n\t\r\necho \"Version being downloaded\"\r\necho -e \"MC Version: ${MINECRAFT_VERSION}\"\r\necho -e \"Build: ${BUILD_NUMBER}\"\r\necho -e \"JAR Name of Build: ${JAR_NAME}\"\r\nDOWNLOAD_URL=https:\/\/papermc.io\/api\/v2\/projects\/${PROJECT}\/versions\/${MINECRAFT_VERSION}\/builds\/${BUILD_NUMBER}\/downloads\/${JAR_NAME}\r\n\r\ncd \/mnt\/server\r\n\r\necho -e \"Running curl -o ${SERVER_JARFILE} ${DOWNLOAD_URL}\"\r\n\r\ncurl -o ${SERVER_JARFILE} ${DOWNLOAD_URL}\r\n\r\nif [ ! -f config.yml ]; then\r\n\techo -e \"Downloading ${PROJECT} config.yml\"\r\n\tcurl -o config.yml https:\/\/raw.githubusercontent.com\/parkervcp\/eggs\/master\/game_eggs\/minecraft\/proxy\/java\/waterfall\/config.yml\r\nelse\r\n\techo -e \"${PROJECT} config.yml exists. Will not pull a new file\"\r\nfi\r\n\r\n# Install eaglercraft plugin\r\nmkdir plugins\r\ncd plugins\r\ncurl -O https:\/\/gitlab.com\/lax1dude\/eaglercraftx-1.8\/-\/raw\/main\/gateway\/EaglercraftXBungee\/EaglerXBungee-Latest.jar",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Bungeecord Jar File",
+            "description": "The name of the Jarfile to use when running Waterfall.",
+            "env_variable": "SERVER_JARFILE",
+            "default_value": "waterfall.jar",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|regex:\/^([\\w\\d._-]+)(\\.jar)$\/",
+            "field_type": "text"
+        }
+    ]
+}

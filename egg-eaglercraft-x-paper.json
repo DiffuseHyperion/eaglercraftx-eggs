@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2022-12-28T21:11:16+08:00",
+    "exported_at": "2022-12-29T20:12:52+08:00",
     "name": "EaglercraftX Paper",
     "author": "unknown@unknown.com",
     "description": "mostly copied from stock paper egg, with some simplification to the install script and automatic setting of configs. Below is the original description:\r\n\r\nHigh performance Spigot fork that aims to fix gameplay and mechanics inconsistencies.",
