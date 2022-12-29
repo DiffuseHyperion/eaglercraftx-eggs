@@ -1,5 +1,5 @@
-# eaglerxeggs
-Pterodactyl eggs for EaglercraftX 1.8.8
+# eaglercraftx-eggs
+Pterodactyl eggs for EaglercraftX
 
 Includes automatic configuration and plugin downloader for Bungeecord.
 
