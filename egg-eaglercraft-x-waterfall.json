@@ -6,7 +6,7 @@
     },
     "exported_at": "2022-12-29T20:12:53+08:00",
     "name": "EaglercraftX Waterfall",
-    "author": "support@pterodactyl.io",
+    "author": "unknown@unknown.com",
     "description": "modified from parkervcp's waterfall egg from https:\/\/github.com\/parkervcp\/eggs\/tree\/master\/game_eggs\/minecraft\/proxy\/java\/waterfall, original description below:\r\n\r\nPaper fork of the BungeeCord software, with improved Forge support and more features.",
     "features": null,
     "docker_images": {
